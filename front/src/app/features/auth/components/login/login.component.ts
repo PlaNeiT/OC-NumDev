@@ -5,7 +5,7 @@ import { SessionInformation } from 'src/app/interfaces/sessionInformation.interf
 import { SessionService } from 'src/app/services/session.service';
 import { LoginRequest } from '../../interfaces/loginRequest.interface';
 import { AuthService } from '../../services/auth.service';
-
+import { NgZone } from '@angular/core';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -35,7 +35,8 @@ export class LoginComponent {
   constructor(private authService: AuthService,
               private fb: FormBuilder,
               private router: Router,
-              private sessionService: SessionService) {
+              private sessionService: SessionService,
+              private ngZone: NgZone) {
   }
 
   public submit(): void {
@@ -43,7 +44,9 @@ export class LoginComponent {
     this.authService.login(loginRequest).subscribe({
       next: (response: SessionInformation) => {
         this.sessionService.logIn(response);
-        this.router.navigate(['/sessions']);
+        this.ngZone.run(() => {
+          this.router.navigate(['/sessions']);
+        });
       },
       error: error => this.onError = true,
     });
