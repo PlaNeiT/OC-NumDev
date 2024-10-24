@@ -52,10 +52,10 @@ describe('RegisterComponent', () => {
 
   it('should submit the form and redirect to login on success', () => {
     const registerRequest = {
-      email: 'test@example.com',
-      firstName: 'John',
-      lastName: 'Doe',
-      password: 'password123'
+      email: 'will.smith@gmail.com',
+      firstName: 'Will',
+      lastName: 'Smith',
+      password: 'test123'
     };
 
     jest.spyOn(authService, 'register').mockReturnValue(of(undefined));
@@ -71,10 +71,10 @@ describe('RegisterComponent', () => {
     jest.spyOn(authService, 'register').mockReturnValue(throwError(() => new Error('Registration failed')));
 
     component.form.setValue({
-      email: 'test@example.com',
-      firstName: 'John',
-      lastName: 'Doe',
-      password: 'password123'
+      email: 'will.smith@gmail.com',
+      firstName: "Will",
+      lastName: 'Smith',
+      password: 'test123'
     });
 
     component.submit();
