@@ -22,8 +22,8 @@ class MockAuthService {
       token: 'fake-token',
       id: 1,
       username: 'user',
-      firstName: 'John',
-      lastName: 'Doe',
+      firstName: 'Will',
+      lastName: 'Smith',
       type: 'user'
     } as SessionInformation);
   }
