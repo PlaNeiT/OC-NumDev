@@ -36,6 +36,7 @@ public class UserControllerTest {
                 .andReturn();
 
         String response = result.getResponse().getContentAsString();
+        System.out.println("Response: " + response);
         return JsonPath.read(response, "$.token");
     }
 
@@ -67,5 +68,15 @@ public class UserControllerTest {
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testDeleteUserUnauthorized() throws Exception {
+        String token = obtainAccessToken();
+
+        mockMvc.perform(delete("/api/user/2")
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnauthorized());
     }
 }

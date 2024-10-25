@@ -176,5 +176,23 @@ class SessionServiceTest {
         });
     }
 
+    @Test
+    void testNoLongerParticipateUserNotRemoved() {
+        Long sessionId = 1L;
+        Long userId = 2L;
+        User otherUser = new User();
+        otherUser.setId(2L);
+        session.getUsers().add(user);
+        session.getUsers().add(otherUser);
+
+        when(sessionRepository.findById(sessionId)).thenReturn(Optional.of(session));
+
+        sessionService.noLongerParticipate(sessionId, userId);
+
+        verify(sessionRepository, times(1)).save(session);
+        assertTrue(session.getUsers().contains(user));
+        assertFalse(session.getUsers().contains(otherUser));
+    }
+
 
 }

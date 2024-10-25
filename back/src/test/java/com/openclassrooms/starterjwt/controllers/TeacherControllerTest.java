@@ -61,6 +61,26 @@ public class TeacherControllerTest {
     }
 
     @Test
+    public void testFindByIdNotFound() throws Exception {
+        String token = obtainAccessToken();
+
+        mockMvc.perform(get("/api/teacher/9999")
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testFindByIdInvalidFormat() throws Exception {
+        String token = obtainAccessToken();
+
+        mockMvc.perform(get("/api/teacher/abc")
+                        .header("Authorization", "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void testFindAll() throws Exception {
         String token = obtainAccessToken();
 
